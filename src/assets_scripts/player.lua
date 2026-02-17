@@ -2,7 +2,9 @@ local pb = pb or require("PudimBasicsGl") ---@diagnostic disable-line: undefined
 
 local function create_player(x, y)
     local player = {
-        x = x or 0, y = y or 0,
+        x = x or 0, 
+        y = y or 0,
+        speed = 50,
         spr = {
             idle = pb.texture.load("src/sprites/player/idle.png")
         },
@@ -19,16 +21,16 @@ local function create_player(x, y)
         end,
         update = function (self, dt)
             if pb.input.is_key_pressed(pb.input.KEY_W) then 
-                self.y = self.y - 1 * dt
+                self.y = self.y - self.speed * dt
             end
             if pb.input.is_key_pressed(pb.input.KEY_S) then 
-                self.y = self.y + 1 * dt
+                self.y = self.y + self.speed * dt
             end
             if pb.input.is_key_pressed(pb.input.KEY_A) then 
-                self.x = self.x - 1 * dt
+                self.x = self.x - self.speed * dt
             end
             if pb.input.is_key_pressed(pb.input.KEY_D) then 
-                self.x = self.x + 1 * dt
+                self.x = self.x + self.speed * dt
             end
         end
     }
