@@ -11,7 +11,8 @@ description = {
 }
 dependencies = {
    "lua ~> 5.4",
-   "pudimbasicsgl"
+   "pudimbasicsgl",
+   "vmsl"
 }
 build_dependencies = {
 }
