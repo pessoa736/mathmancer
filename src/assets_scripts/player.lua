@@ -1,6 +1,3 @@
-require("player_d")
-
-
 local pb = pb or require("PudimBasicsGl") ---@diagnostic disable-line: undefined-global
 
 local vec       = require("vectors")
@@ -27,16 +24,27 @@ local function create_player_group()
         ---@type player
         local player = {
             idx        = #self,
-            name       = atr.name       or "player",
+            name       = atr.name or "player",
             classnames = {"player"},
             
+
             position = atr.position or vec.CreateVector(0, 0),
             velocity = vec.CreateVector(0, 0),
-            dirx = 1,
-            speed    = atr.speed    or 50,
+            dirx     = 1,
+            speed    = atr.speed or 50,
 
+
+            status = "idle",
             spr = {
-                idle = pb.texture.load("src/sprites/player/idle.png")
+                idle = {
+                    pb.texture.load("src/sprites/player/idle.png")
+                },
+                walking = {
+                    pb.texture.load("src/sprites/player/walking/1.png"),
+                    pb.texture.load("src/sprites/player/walking/2.png"),
+                    pb.texture.load("src/sprites/player/walking/3.png"),
+                    pb.texture.load("src/sprites/player/walking/4.png"),
+                }
             }
         }
 
@@ -48,7 +56,8 @@ local function create_player_group()
     player_group.draw = function (self, time)
         for idx, player in ipairs(self) do
             ---@type Texture
-            local spr = player.spr.idle
+            local sprs = player.spr[player.status]
+            local spr = sprs[math.floor(time*8)%(#sprs)+1]
             
             if spr then
                     spr:draw_ex(
@@ -72,6 +81,12 @@ local function create_player_group()
             local down  = is_pressed(Input.KEY_S)
             local left  = is_pressed(Input.KEY_A)
             local rigth = is_pressed(Input.KEY_D)
+
+            if (up or down or left or rigth) then 
+                player.status = "walking" 
+            else
+                player.status = "idle"
+            end
             
             if is_pressed(Input.KEY_ESCAPE) then _G.RESTART = true end
 

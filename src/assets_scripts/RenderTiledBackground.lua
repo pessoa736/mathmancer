@@ -1,6 +1,3 @@
-local vectors = require "vectors"
-
-
 ---@param camera PudimBasicsGl.camera
 ---@param window Window
 ---@param Texture Texture
