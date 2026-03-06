@@ -8,6 +8,7 @@
 ---@field spr        table
 ---@field velocity   Vector
 ---@field dirx       number
+---@field status     string
 ---@field classnames string | string[]
 
 ---@class playerGroup
